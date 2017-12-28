@@ -3,14 +3,19 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
-import 'iview/dist/styles/iview.css';
+import Vuex from 'vuex'
+import 'iview/dist/styles/iview.css'
+import store from '@/store/vuex.store.js'
 
+Vue.prototype.HOST = '/api'
 Vue.config.productionTip = false
 
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
   router,
+  Vuex,
+  store,
   template: '<App/>',
   components: { App }
 })

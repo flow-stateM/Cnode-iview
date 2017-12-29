@@ -1,15 +1,16 @@
 <template>
   <Col :xs="0" :sm="18" :md="18" :lg="19">
-    <Spin size="large" fix v-if="isload"></Spin>
+    <div style="position:absolute;width:100%;height:100%;backgroundColor:rgba(255,255,255,0.7);left:0;top:0;" v-if="isload"></div>
+    <div  v-if="isload" class="loading"></div>
     <ul>
-      <li class="topicsItem">
-        <Avatar src="../../../build/favicon.ico"  icon="person" ></Avatar>
+      <li v-for="item in topiclist" :key="item.id" class="topicsItem">
+        <Avatar :src="item.author.avatar_url" @error='imgError' ></Avatar>
         <div style="paddingLeft:10px;height:50px;width:70%;display:inline-block;">
-          <div class="topicTitle"><Tag color="green" style="cursor:default;">置顶</Tag><span class="titleName">{{topics[0].title}}</span></div>
-          <div class="topicAuthor">{{topics[0].author_name}}发表于</div>
+          <div class="topicTitle"><Tag :color="tagColor(item)" style="cursor:default;">{{tagType(item)}}</Tag><span class="titleName">{{item.title}}</span></div>
+          <div class="topicAuthor">{{item.author.loginname}}发表于{{item.create_at.substr(0,10)}}</div>
         </div>
         <div style="width:6%;"></div>
-        <div style="color:#c0c0c0"><span>回复:{{topics[0].replay_count}}</span><span style="borderLeft:1px solid #c0c0c0;marginLeft:5px;paddingLeft:5px;">访问:{{topics[0].visit_count}}</span></div>
+        <div style="color:#c0c0c0"><span>回复:{{item.reply_count}}</span><span style="borderLeft:1px solid #c0c0c0;marginLeft:5px;paddingLeft:5px;">访问:{{item.visit_count}}</span></div>
       </li>
     </ul>
   </Col>
@@ -24,33 +25,32 @@ export default {
   computed:{
     isload(){
       return this.$store.state.loading;
+    },
+    topiclist(){
+      return this.$store.state.topics
     }
   },
-  data(){
-    return {
-      topics:[
-        {
-          id:1,
-          title:"企业级 Node.js 框架 Egg 发布 2.0，性能提升 30%，拥抱 Async你不懂你不懂你不懂",
-          replay_count:60,
-          visit_count:5230,
-          author_name:'flow-state'
-        },
-        {
-          id:2,
-          title:"企业级 Node.js 框架 Egg 发布 2.0，性能提升 30%，拥抱 Async",
-          replay_count:60,
-          visit_count:5230,
-          author_name:'flow-state'
-        },
-        {
-          id:3,
-          title:"企业级 Node.js 框架 Egg 发布 2.0，性能提升 30%，拥抱 Async",
-          replay_count:60,
-          visit_count:5230,
-          author_name:'flow-state'
-        }
-      ]
+  methods:{
+    tagColor(item){
+      return item.top?'green':'blue'
+    },
+    tagType(item){
+      if(item.top){
+        return '置顶'
+      }
+      if(item.good){
+        return '精华'
+      }
+      if(item.tab==='ask'){
+        return '问答'
+      }
+      if(item.tab==='job'){
+        return '招聘'
+      }
+      return '分享'
+    },
+    imgError(){
+      return '../../static/favicon.ico' 
     }
   },
   components:{Row,Col,Avatar,Tag,Spin}
@@ -94,5 +94,32 @@ export default {
     font-size:14px;
     color:#c1c1c1
   }
+  .loading{
+    position: absolute;
+    left:50%;
+    width: 100px;
+    height: 100px;
+    margin-left: -50px;
+    /* background-color: rgba(45,140,240,1); */
+    border-radius: 50%;
+    z-index: 5;
+    animation: ani-demo-spin 1s linear infinite;
 
+  }
+  .loading:after{
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 15px;
+    height: 15px;
+    content:'';
+    background-color: #08c0c2;
+    transform:translateX(-50%) translateY(-50%);
+    border-radius:50%;
+  }
+  @keyframes ani-demo-spin {
+    from { transform:rotate(0)}
+    50%  { transform:rotate(180deg)}
+    to   {  transform:rotate(360deg)}
+  }
 </style>

@@ -11,8 +11,9 @@ let store = new Vuex.Store({
   },
   mutations: {
     changeList(state,newlist){
-      state.topics = newlist;
+      state.topics = newlist.data;
       state.loading = false;
+      console.log(state.topics);
     }
   },
   actions:{

@@ -24,7 +24,7 @@ export default {
   name:'NavList',
   components:{Col,Menu,MenuItem},
   created(){
-    this.$store.dispatch('gettopicslist')
+    this.$store.dispatch('gettopicslist');
   },
   methods:{
     gettopicslist(name){

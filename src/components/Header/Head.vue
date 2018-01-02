@@ -2,11 +2,11 @@
   <header style="position:relative;">
     <Row type="flex" justify="center" align='middle'  style="height:64px;boxShadow:0 4px 8px #f0f1f2">
       <Col style="height:100%;"  :xs="24" :sm="6" :md="6" :lg="5">
-      <h1>CNode</h1>
+      <router-link style='color:inherit;' to='/'><h1>CNode</h1></router-link>
       </Col>
       <Col style="height:100%" :xs="0" :sm="18" :md="18" :lg="19">
         <div style="height:56px;borderLeft:1px solid rgb(233, 233, 233);float:left;marginTop:4px "></div>
-        <Menu active-name="1" style="height:100%;float:left;" mode="horizontal" theme="light" >
+        <Menu @on-select="menuTop" style="height:100%;float:left;" mode="horizontal" theme="light" >
           <MenuItem  name="1">
           <Icon style="position:relative;top:3px;" size=24 type="ios-home"></Icon></span>
               主页
@@ -68,6 +68,13 @@ export default {
     Button,
     Row,
     Col,Menu,MenuItem,Submenu,MenuGroup,Icon,Avatar,Dropdown,DropdownMenu,DropdownItem,ButtonGroup,Tag
+  },
+  methods:{
+    menuTop(name){
+      if(name == 1){
+        this.$router.push('/')
+      }
+    }
   }
 }
 </script>

@@ -1,7 +1,8 @@
 <template>
   <Row>
     <Col :xs="24" :sm="0" :md="0" :lg="0">
-    <Spin size="large" v-if="isload"></Spin>
+    <div style="position:absolute;width:100%;height:100%;backgroundColor:rgba(255,255,255,0.7);left:0;top:0;" v-if="isload"></div>
+    <div  v-if="isload" class="loading"></div>
       <ul>
       <li v-for="item in topiclist" :key="item.id" class="topicsItem">
         <Avatar :src="item.author.avatar_url"  icon="person" ></Avatar>
@@ -24,10 +25,10 @@ export default {
   name:'TopiclistMin',
   computed:{
     isload(){
-      return this.$store.state.loading;
+      return this.$store.state.topicList.loading;
     },
     topiclist(){
-      return this.$store.state.topics
+      return this.$store.state.topicList.topics
     }
   },
   methods:{
@@ -91,5 +92,23 @@ export default {
     font-size:14px;
     color:#c1c1c1
   }
-
+  .loading:after{
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 15px;
+    height: 15px;
+    content:'';
+    background-color: #08c0c2;
+    transform:translateX(-50%) translateY(-50%);
+    border-radius:50%;
+  }
+  @keyframes ani-demo-spin {
+    from { transform:rotate(0)}
+    50%  { transform:rotate(180deg)}
+    to   {  transform:rotate(360deg)}
+  }
+  .ivu-avatar{
+    position:static;
+  }
 </style>

@@ -18,6 +18,15 @@ export default {
     TopicDetileContent,
     Footer,
     BackToTop
+  },
+  beforeRouteUpdate(to,from,next){
+    this.$store.state.topicDetileContent.getId = to.params.id
+    this.$store.dispatch('getTopicDetile')
+    next();
+  },
+  created(){
+    //跳到最顶部分，方便阅读
+    document.documentElement.scrollTop = 0
   }
 }
 </script>

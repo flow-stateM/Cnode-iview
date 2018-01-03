@@ -104,7 +104,7 @@ export default {
     border-radius: 50%;
     z-index: 5;
     animation: ani-demo-spin 1s linear infinite;
-
+    top:20px;
   }
   .loading:after{
     position: absolute;

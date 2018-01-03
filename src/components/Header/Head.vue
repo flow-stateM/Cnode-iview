@@ -21,19 +21,19 @@
           </MenuItem>
       </Menu>
       <div style="float:right;height:100%;display:flex;alignItems:center;marginRight:25px;">
-        <!-- <ButtonGroup size="large">
-          <Button type='primary'>登陆</Button>
+        <ButtonGroup v-if="!userLogin.isLogin&&!isLoginPageFn" size="large">
+          <Button @click='loginFn' type='primary'>登陆</Button>
           <Button>注册</Button>
-        </ButtonGroup> -->
-        <Dropdown placement="bottom-start">
+        </ButtonGroup>
+        <Dropdown  v-if="userLogin.isLogin" placement="bottom-start">
           <div style=''>
-            <Avatar style="position:relative;top:-2px" icon="person" />
+            <Avatar src="static/favicon.ico" style="position:relative;top:-2px" icon="person" />
             <h3 class="userName">flow-state</h3>
           </div>
           <DropdownMenu style="textAlign:center;" slot="list">
             <DropdownItem>发布话题</DropdownItem>
             <DropdownItem>用户中心</DropdownItem>
-            <DropdownItem>退出登陆</DropdownItem>
+            <span  @click="logoutFn"><DropdownItem>退出登陆</DropdownItem></span>
           </DropdownMenu>
         </Dropdown>
       </div>
@@ -44,13 +44,15 @@
         <Dropdown placement="bottom-end">
           <Icon type="navicon-round" size=30></Icon>
           <DropdownMenu style="textAlign:center;" slot="list">
-            <DropdownItem>首页</DropdownItem>
+            <span @click="backToIndex"><DropdownItem>首页</DropdownItem></span>
             <DropdownItem>教程</DropdownItem>
             <DropdownItem>关于</DropdownItem>
-            <DropdownItem><Avatar style="position:relative;top:-1px;marginRight:3px;" icon="person" size="small"></Avatar>flow-state</DropdownItem>
-            <DropdownItem>发布话题</DropdownItem>
-            <DropdownItem>用户中心</DropdownItem>
-            <DropdownItem>退出登陆</DropdownItem>
+            <span @click="loginFn"><DropdownItem v-if="!userLogin.isLogin&&!isLoginPageFn" >登陆</DropdownItem></span>
+            <DropdownItem v-if="!userLogin.isLogin&&!isLoginPageFn" >注册</DropdownItem>
+            <DropdownItem  v-if=" userLogin.isLogin"><Avatar src="static/favicon.ico" style="position:relative;top:-1px;marginRight:3px;" icon="person" size="small"></Avatar>{{userLogin.userName}}</DropdownItem>
+            <DropdownItem v-if="userLogin.isLogin" >发布话题</DropdownItem>
+            <DropdownItem v-if="userLogin.isLogin">用户中心</DropdownItem>
+            <span  v-if="userLogin.isLogin"  @click="logoutFn"><DropdownItem>退出登陆</DropdownItem></span>
           </DropdownMenu>
         </Dropdown>
       </Col>
@@ -69,11 +71,34 @@ export default {
     Row,
     Col,Menu,MenuItem,Submenu,MenuGroup,Icon,Avatar,Dropdown,DropdownMenu,DropdownItem,ButtonGroup,Tag
   },
+  created(){
+    console.log(this.$router.currentRoute.path)
+  },
   methods:{
+    backToIndex(){
+      this.$router.push('/')
+    },
+    loginFn(){
+      this.$router.push('/login')
+    },
     menuTop(name){
       if(name == 1){
         this.$router.push('/')
       }
+    },
+    logoutFn(){
+      this.$Message.info('成功退出登陆')
+      this.$store.state.userLogin.isLogin=false;
+    }
+  },
+  computed:{
+    isLoginPageFn(){
+      if(this.$router.currentRoute.path==='/login'){
+        return true
+      }else{return false}
+    },
+    userLogin(){
+      return this.$store.state.userLogin
     }
   }
 }
@@ -91,6 +116,12 @@ export default {
     margin:0 5px;
     cursor: default;
     display: inline-block;
+  }
+  a{
+    color:inherit;
+  }
+  a:hover{
+    color:inherit;
   }
 </style>
 

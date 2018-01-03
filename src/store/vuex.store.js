@@ -1,34 +1,18 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from 'axios'
+import topicDetile from '@/store/topicDetile.store.js'
+import topicList from '@/store/topicList.store.js'
+import userLogin from '@/store/userLogin.store.js'
+
 Vue.use(Vuex)
 
-let store = new Vuex.Store({
-  state: {
-    type:'all',
-    topics:[],
-    loading:false
-  },
-  mutations: {
-    changeList(state,newlist){
-      state.topics = newlist.data;
-      state.loading = false;
-      console.log(state.topics);
-    }
-  },
-  actions:{
-    gettopicslist({ commit,state },newlist){
-      state.loading = true;
-      axios.get('/api/v1/topics',{
-        params:{
-          tab:state.type
-        }
-      }).then((data)=>{
-        commit('changeList',data.data);
-      }).catch(()=>{
 
-      })
-    }
+let store = new Vuex.Store({
+  modules:{
+    topicDetileContent: topicDetile,
+    topicList:topicList,
+    userLogin:userLogin
   }
 })
 

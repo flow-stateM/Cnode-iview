@@ -29,7 +29,8 @@ export default {
   },
   methods:{
     gettopicslist(name){
-      this.$store.state.type = name;
+      this.$store.state.topicList.type = name;
+      this.$store.state.topicList.page = 1;
       this.$store.dispatch('gettopicslist')
     }
   }

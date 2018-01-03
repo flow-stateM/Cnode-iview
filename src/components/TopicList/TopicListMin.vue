@@ -25,10 +25,10 @@ export default {
   name:'TopiclistMin',
   computed:{
     isload(){
-      return this.$store.state.loading;
+      return this.$store.state.topicList.loading;
     },
     topiclist(){
-      return this.$store.state.topics
+      return this.$store.state.topicList.topics
     }
   },
   methods:{

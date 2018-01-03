@@ -1,7 +1,25 @@
-iview downlist层级比menu低  导致用户头像部分的下拉菜单被文章分类导航菜单盖住
+iview bug downlist层级比menu低  导致用户头像部分的下拉菜单被文章分类导航菜单盖住
+
 
 avatar组件自带绝对定位，不会被遮罩层盖住，需要自行添加position：static
+
 
 cnode数据里面没有总条数 页数导航栏需要自己设定
 
 cnode每条标题信息的分类检测顺序需要定好
+页码导航组件的当前页码需要设置成computed，否则在切换类型的时候页码不会变回1  同时别忘了返回顶部
+在返回首页等操作或者第二次进入一个详情页等操作中需要先重设state为初始状态，否则会先加载一遍之前的内容
+iview bug card组件 slot="extra" 没有效果 需要自己添加class ivu-card-extra
+v-for in 和 of用法
+
+取用户最近话题时候不能包括当前文章 所以用filter函数先过滤一次，在用slice截取5个
+在从一个文章详情页跳转至另一个文章详情页的时候由于组件复用性不会重复触发created，所以需要导航守卫来获取数据，然后在改变路由，执行next
+router-link标签hover时候字体颜色问题
+
+iview 下拉菜单组件的点击事件只能在dropdownitem外面包一层再添加
+
+在进入login页面之前用导航守卫检测状态决定是否能进行登录操作
+
+vue$router没有redirect方法
+
+跳转页面后 滚动条应滚回最上面

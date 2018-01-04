@@ -1,6 +1,6 @@
 <template>
 <div>
-  <Row style="marginTop:10px" type="flex" justify="start" align='top'>
+  <Row style="marginTop:10px;" type="flex" justify="start" align='top'>
     <NavList></NavList>
     <NavListMin></NavListMin>
     <TopicList></TopicList>

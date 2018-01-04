@@ -27,8 +27,8 @@
         </ButtonGroup>
         <Dropdown  v-if="userLogin.isLogin" placement="bottom-start">
           <div style=''>
-            <Avatar src="static/favicon.ico" style="position:relative;top:-2px" icon="person" />
-            <h3 class="userName">flow-state</h3>
+            <Avatar :src="userLogin.avatar_url" style="position:relative;top:-2px" icon="person" />
+            <h3 class="userName">{{userLogin.loginName}}</h3>
           </div>
           <DropdownMenu style="textAlign:center;" slot="list">
             <DropdownItem>发布话题</DropdownItem>
@@ -49,7 +49,7 @@
             <DropdownItem>关于</DropdownItem>
             <span @click="loginFn"><DropdownItem v-if="!userLogin.isLogin&&!isLoginPageFn" >登陆</DropdownItem></span>
             <DropdownItem v-if="!userLogin.isLogin&&!isLoginPageFn" >注册</DropdownItem>
-            <DropdownItem  v-if=" userLogin.isLogin"><Avatar src="static/favicon.ico" style="position:relative;top:-1px;marginRight:3px;" icon="person" size="small"></Avatar>{{userLogin.userName}}</DropdownItem>
+            <DropdownItem  v-if=" userLogin.isLogin"><Avatar :src="userLogin.avatar_url" style="position:relative;top:-1px;marginRight:3px;" icon="person" size="small"></Avatar>{{userLogin.loginName}}</DropdownItem>
             <DropdownItem v-if="userLogin.isLogin" >发布话题</DropdownItem>
             <DropdownItem v-if="userLogin.isLogin">用户中心</DropdownItem>
             <span  v-if="userLogin.isLogin"  @click="logoutFn"><DropdownItem>退出登陆</DropdownItem></span>
@@ -70,9 +70,6 @@ export default {
     Button,
     Row,
     Col,Menu,MenuItem,Submenu,MenuGroup,Icon,Avatar,Dropdown,DropdownMenu,DropdownItem,ButtonGroup,Tag
-  },
-  created(){
-    console.log(this.$router.currentRoute.path)
   },
   methods:{
     backToIndex(){

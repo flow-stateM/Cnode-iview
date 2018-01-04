@@ -1,6 +1,6 @@
 <template>
-  <Row style="marginTop:10px;minHeight:500px;" type='flex' justify="space-around">
-    <Col style="" :xs="22" :sm="15" :md="15" :lg="15" >
+  <Row style="marginTop:10px;minHeight:500px;" type='flex' justify="center">
+    <Col style="maxWidth:1150px;marginRight:15px;" :xs="22" :sm="15" :md="15" :lg="15" >
     <div style="minHeight:300px;position:absolute;width:100%;height:100%;backgroundColor:rgba(255,255,255,0.7);left:0;top:0;" v-if="isload"></div>
     <div v-if="isload" class="loading"></div>
     <Card :padding="0" dis-hover style="marginBottom:20px">
@@ -15,8 +15,9 @@
       <div class='markdown-body' v-html="content"></div>
     </Card>
     <TopicDetileReply></TopicDetileReply>
+    <UserReply></UserReply>
     </Col>
-    <Col style="" :xs="0" :sm="6" :md="6" :lg="6">
+    <Col style="maxWidth:400px;" :xs="0" :sm="6" :md="6" :lg="6">
       <Card style="marginBottom:20px">
         <p slot="title">作者信息</p>
         <div>
@@ -29,6 +30,7 @@
       <Card>
         <p slot="title">作者其他话题</p>
         <p v-for="item in recent_topics" style="color:#c6c6c6;padding:5px;overflow:hidden;textOverflow:ellipsis;whiteSpace: nowrap;"><router-link :to="`/topic/${item.id}`">{{item.title}}</router-link></p>
+        <p v-if="!recent_topics.length">此用户没有其他任何话题哦！</p> 
       </Card>
     </Col>
   </Row>
@@ -36,7 +38,9 @@
 <script>
 import {Row,Col,Card,Avatar,Tag} from 'iview'
 import TopicDetileReply from '@/components/TopicDetile/TopicDetileReply.vue'
+import UserReply from "@/components/TopicDetile/UserReply.vue"
 import 'github-markdown-css'
+
 export default {
   name:'TopicDetileContent',
   computed:{
@@ -85,7 +89,7 @@ export default {
     this.$store.dispatch('getTopicDetile')
   },
   components:{
-    Row,Col,Card,Avatar,Tag,TopicDetileReply
+    Row,Col,Card,Avatar,Tag,TopicDetileReply,UserReply
   }
 }
 </script>

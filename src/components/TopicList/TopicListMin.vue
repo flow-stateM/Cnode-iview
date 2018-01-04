@@ -7,7 +7,7 @@
       <li v-for="item in topiclist" :key="item.id" class="topicsItem">
         <Avatar :src="item.author.avatar_url"  icon="person" ></Avatar>
         <div style="paddingLeft:10px;height:50px;width:70%;display:inline-block;">
-          <div class="topicTitle"><Tag :color="tagColor(item)" style="cursor:default;">{{tagType(item)}}</Tag><span class="titleName">{{item.title}}</span></div>
+          <div class="topicTitle"><Tag :color="tagColor(item)" style="cursor:default;">{{tagType(item)}}</Tag><router-link style="color:inherit;" :to="'/topic/'+item.id"><span class="titleName">{{item.title}}</span></router-link></div>
           <div class="topicAuthor">{{item.author.loginname}}发表于{{item.create_at.substr(0,10)}}</div>
         </div>
         <div style="width:6%;"></div>

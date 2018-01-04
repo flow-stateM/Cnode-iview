@@ -32,11 +32,9 @@ const topicDetile = {
   mutations:{
     changeUserInfo(state,userInfo){
       state.userInfo={...userInfo.data}
-      console.log(state.userInfo)
     },
     changeTopicDetile(state,topicdetiles){
       state.topicInfo = {...topicdetiles.data}
-      console.log(state)
     },
     reInit(state){
       state.topicInfo={    

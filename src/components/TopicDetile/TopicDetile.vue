@@ -17,11 +17,12 @@ export default {
     Head,
     TopicDetileContent,
     Footer,
-    BackToTop
+    BackToTop,
   },
   beforeRouteUpdate(to,from,next){
     this.$store.state.topicDetileContent.getId = to.params.id
     this.$store.dispatch('getTopicDetile')
+    document.documentElement.scrollTop = 0
     next();
   },
   created(){

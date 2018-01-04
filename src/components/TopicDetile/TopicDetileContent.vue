@@ -15,6 +15,7 @@
       <div class='markdown-body' v-html="content"></div>
     </Card>
     <TopicDetileReply></TopicDetileReply>
+    <UserReply></UserReply>
     </Col>
     <Col style="maxWidth:400px;" :xs="0" :sm="6" :md="6" :lg="6">
       <Card style="marginBottom:20px">
@@ -29,6 +30,7 @@
       <Card>
         <p slot="title">作者其他话题</p>
         <p v-for="item in recent_topics" style="color:#c6c6c6;padding:5px;overflow:hidden;textOverflow:ellipsis;whiteSpace: nowrap;"><router-link :to="`/topic/${item.id}`">{{item.title}}</router-link></p>
+        <p v-if="!recent_topics.length">此用户没有其他任何话题哦！</p> 
       </Card>
     </Col>
   </Row>
@@ -36,7 +38,9 @@
 <script>
 import {Row,Col,Card,Avatar,Tag} from 'iview'
 import TopicDetileReply from '@/components/TopicDetile/TopicDetileReply.vue'
+import UserReply from "@/components/TopicDetile/UserReply.vue"
 import 'github-markdown-css'
+
 export default {
   name:'TopicDetileContent',
   computed:{
@@ -85,7 +89,7 @@ export default {
     this.$store.dispatch('getTopicDetile')
   },
   components:{
-    Row,Col,Card,Avatar,Tag,TopicDetileReply
+    Row,Col,Card,Avatar,Tag,TopicDetileReply,UserReply
   }
 }
 </script>

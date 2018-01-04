@@ -1,6 +1,6 @@
 <template>
     <Col :xs="24" :sm="0" :md="0" :lg="0">
-      <Menu @on-select="gettopicslist" style="display:flex;justifyContent:space-between;" mode='horizontal' active-name="all">
+      <Menu @on-select="gettopicslist" style="display:flex;justifyContent:space-between;" mode='horizontal' :active-name="getType">
         <MenuItem name='all'>全部
         </MenuItem>
         <MenuItem name='good'>精华
@@ -32,6 +32,11 @@ export default {
       this.$store.state.topicList.type = name;
       this.$store.state.topicList.page = 1;
       this.$store.dispatch('gettopicslist')
+    }
+  },
+  computed:{
+    getType(){
+      return this.$store.state.topicList.type
     }
   }
 }

@@ -1,7 +1,7 @@
 <template>
-<div>
+<div v-if="!isLogin">
   <Head></Head>
-  <Row type="flex"  justify="center" align='middle' style="marginTop:10px;">
+  <Row type="flex"  justify="center" align='middle' style="marginTop:10px;height:600px;">
     <Col  :xs="22" :sm="21" :md="20" :lg="18">
       <Card style="paddingBottom:50px;textAlign:center">
         <p style="textAlign:center;fontSize:20px;" slot="title">登陆/注册</p>
@@ -16,16 +16,19 @@
             </span>
           </div>
         </div>
-        <Button size="large" style="padding:5px 25px;" type="success">登陆</Button>
+        <Button @click="loginBtnFn" size="large" style="padding:5px 25px;" type="success">登陆</Button>
       </Card>
     </Col>
   </Row>
+  <Footer></Footer>
 </div>
 </template>
 
 <script>
 import Head from '@/components/Header/Head.vue'
-import {Row,Col,Input,Card,Icon,Button,Switch} from 'iview'
+import Footer from '@/components/Footer/Footer.vue'
+import {Row,Col,Input,Card,Icon,Button} from 'iview'
+
 
 export default {
   name:'Login',
@@ -33,7 +36,7 @@ export default {
     return {
       userNameVal:'',
       userAccesstokeVal:'',
-      isEyeOpen:false
+      isEyeOpen:false,
     }
   },
   beforeRouteEnter(to,from,next){
@@ -51,13 +54,27 @@ export default {
     Row,
     Col,
     Icon,
-    Button,
-    Switch
+    Button,Footer
   },
   methods:{
     isEyeOpenFn(){
-      console.log(this.isEyeOpen);
       this.isEyeOpen= !this.isEyeOpen
+    },
+    loginBtnFn(){
+      if(this.userAccesstokeVal.trim()===''){
+        return this.$Message.error('还没有填写哦！')
+      }
+      this.$store.dispatch('isAccesstokenTrue',this.userAccesstokeVal.trim())
+    },
+  },
+  computed:{
+    isLogin(){
+      if(this.$store.state.userLogin.isLogin){
+        // this.$router.push('/')
+        this.$router.back()
+        this.$Message.success('登陆成功！')
+      }
+      return this.$store.state.userLogin.isLogin
     }
   }
 }

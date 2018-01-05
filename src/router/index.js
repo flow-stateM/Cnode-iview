@@ -4,6 +4,7 @@ import Home from '@/components/Home/Home.vue'
 import TopicDetile from '@/components/TopicDetile/TopicDetile.vue'
 import Login from '@/components/Login/Login.vue'
 import CreateTopic from '@/components/User/CreateTopic.vue'
+import About from '@/components/About/About.vue'
 
 Vue.use(Router)
 
@@ -34,6 +35,11 @@ export default new Router({
       path:'/create',
       name:'create',
       component:CreateTopic
+    },
+    {
+      path:'/about',
+      name:'about',
+      component:About
     }
   ]
 })

@@ -31,7 +31,7 @@
             <h3 class="userName">{{userLogin.loginName}}</h3>
           </div>
           <DropdownMenu style="textAlign:center;" slot="list">
-            <DropdownItem>发布话题</DropdownItem>
+            <span @click="createTopicFn"><DropdownItem>发布话题</DropdownItem></span>
             <DropdownItem>用户中心</DropdownItem>
             <span  @click="logoutFn"><DropdownItem>退出登陆</DropdownItem></span>
           </DropdownMenu>
@@ -50,7 +50,7 @@
             <span @click="loginFn"><DropdownItem v-if="!userLogin.isLogin&&!isLoginPageFn" >登陆</DropdownItem></span>
             <DropdownItem v-if="!userLogin.isLogin&&!isLoginPageFn" >注册</DropdownItem>
             <DropdownItem  v-if=" userLogin.isLogin"><Avatar :src="userLogin.avatar_url" style="position:relative;top:-1px;marginRight:3px;" icon="person" size="small"></Avatar>{{userLogin.loginName}}</DropdownItem>
-            <DropdownItem v-if="userLogin.isLogin" >发布话题</DropdownItem>
+            <span  v-if="userLogin.isLogin"  @click="createTopicFn"><DropdownItem v-if="userLogin.isLogin" >发布话题</DropdownItem></span>
             <DropdownItem v-if="userLogin.isLogin">用户中心</DropdownItem>
             <span  v-if="userLogin.isLogin"  @click="logoutFn"><DropdownItem>退出登陆</DropdownItem></span>
           </DropdownMenu>
@@ -72,6 +72,9 @@ export default {
     Col,Menu,MenuItem,Submenu,MenuGroup,Icon,Avatar,Dropdown,DropdownMenu,DropdownItem,ButtonGroup,Tag
   },
   methods:{
+    createTopicFn(){
+      this.$router.push('/create')
+    },
     backToIndex(){
       this.$router.push('/')
     },
@@ -86,6 +89,9 @@ export default {
     logoutFn(){
       this.$Message.info('成功退出登陆')
       this.$store.state.userLogin.isLogin=false;
+      if(this.$router.currentRoute.path==='/create'){
+        this.$router.push('/login')
+      }
     }
   },
   computed:{

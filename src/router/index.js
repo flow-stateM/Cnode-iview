@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import Home from '@/components/Home/Home.vue'
 import TopicDetile from '@/components/TopicDetile/TopicDetile.vue'
 import Login from '@/components/Login/Login.vue'
+import CreateTopic from '@/components/User/CreateTopic.vue'
 
 Vue.use(Router)
 
@@ -28,6 +29,11 @@ export default new Router({
       path: '/login',
       name: 'login',
       component:Login
+    },
+    {
+      path:'/create',
+      name:'create',
+      component:CreateTopic
     }
   ]
 })

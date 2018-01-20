@@ -6,9 +6,13 @@ const userLogin = {
     accesstoken:'1c961036-5a12-4491-b5c9-c264685a0158',
     loginName:'',
     avatar_url:'',
-    id:''
+    id:'',
+    waitCall:null
   },
   mutations:{
+    waitCallCommit(state,fn){
+      state.waitCall=fn;
+    },
     logOut(state){
       state.isLogin=false
       state.loginName=""
@@ -16,8 +20,9 @@ const userLogin = {
       state.id='',
       success=false
     },
-    errorToken(){
+    errorToken(state){
       this._vm.$Message.error('accesstoken错误，请查验后再试试吧！')
+      state.waitCall()
     },
     successToken(state,data){
       state.isLogin=true
@@ -25,6 +30,8 @@ const userLogin = {
       state.loginName = data.loginname
       state.avatar_url =data.avatar_url
       state.accesstoken=data.newToken
+      state.waitCall()
+      state.waitCall=null
     }
   },
   actions:{

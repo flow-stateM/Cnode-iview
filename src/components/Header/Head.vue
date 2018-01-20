@@ -11,10 +11,10 @@
           <Icon style="position:relative;top:3px;" size=24 type="ios-home"></Icon></span>
               主页
           </MenuItem>
-          <MenuItem name="2">
+          <a target="_blank" href="https://cnodejs.org/getstart"><MenuItem name="2">
               <Icon style="position:relative;top:3px;" size=24 type="ios-book-outline"></Icon>
               教程
-          </MenuItem>
+          </MenuItem></a>
           <MenuItem name="3">
               <Icon style="position:relative;top:3px;" size=24 type="ios-at"></Icon>
               关于
@@ -46,7 +46,7 @@
           <DropdownMenu style="textAlign:center;" slot="list">
             <span @click="backToIndex"><DropdownItem>首页</DropdownItem></span>
             <DropdownItem>教程</DropdownItem>
-            <DropdownItem>关于</DropdownItem>
+            <span @click="toAbout"><DropdownItem>关于</DropdownItem></span>
             <span @click="loginFn"><DropdownItem v-if="!userLogin.isLogin&&!isLoginPageFn" >登陆</DropdownItem></span>
             <DropdownItem v-if="!userLogin.isLogin&&!isLoginPageFn" >注册</DropdownItem>
             <DropdownItem  v-if=" userLogin.isLogin"><Avatar :src="userLogin.avatar_url" style="position:relative;top:-1px;marginRight:3px;" icon="person" size="small"></Avatar>{{userLogin.loginName}}</DropdownItem>
@@ -81,14 +81,23 @@ export default {
     loginFn(){
       this.$router.push('/login')
     },
+    toAbout(){
+      this.$router.push('/about')
+    },
     menuTop(name){
       if(name == 1){
         this.$router.push('/')
+      }
+      if(name == 3){
+        this.$router.push('/about')
       }
     },
     logoutFn(){
       this.$Message.info('成功退出登陆')
       this.$store.state.userLogin.isLogin=false;
+      if(this.$router.currentRoute.path==='/create'){
+        this.$router.push('/login')
+      }
     }
   },
   computed:{

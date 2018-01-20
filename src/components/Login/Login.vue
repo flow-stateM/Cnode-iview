@@ -37,6 +37,7 @@ export default {
       userNameVal:'',
       userAccesstokeVal:'',
       isEyeOpen:false,
+      wait:null
     }
   },
   beforeRouteEnter(to,from,next){
@@ -64,6 +65,11 @@ export default {
       if(this.userAccesstokeVal.trim()===''){
         return this.$Message.error('还没有填写哦！')
       }
+      let wait = this.$Message.loading({
+                    content: '登录中...',
+                    duration: 0
+      });
+      this.$store.commit('waitCallCommit',wait)
       this.$store.dispatch('isAccesstokenTrue',this.userAccesstokeVal.trim())
     },
   },
@@ -73,6 +79,7 @@ export default {
         // this.$router.push('/')
         this.$router.back()
         this.$Message.success('登陆成功！')
+        this.wait();
       }
       return this.$store.state.userLogin.isLogin
     }
